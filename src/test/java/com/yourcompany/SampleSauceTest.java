@@ -61,7 +61,9 @@ public class SampleSauceTest {
 
 //                // Windows
                 new Object[]{"browser","chrome", "latest", "Windows 10",""},
+                new Object[]{"browser","chrome", "latest", "Windows 10",""},
                 new Object[]{"browser","MicrosoftEdge", "latest", "Windows 10",""},
+                new Object[]{"browser","MicrosoftEdge", "latest-1", "Windows 10",""},
                 new Object[]{"browser","firefox", "latest-2", "Windows 10",""},
                 new Object[]{"browser","internet explorer", "11", "Windows 8.1",""},
                 new Object[]{"browser","firefox", "55.0", "Windows 7",""},

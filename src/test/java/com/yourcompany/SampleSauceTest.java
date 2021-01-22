@@ -68,6 +68,9 @@ public class SampleSauceTest {
         
                 // Mac
                 new Object[]{"browser","firefox", "latest", "macOS 10.14",""},
+                new Object[]{"browser","firefox", "latest", "macOS 10.15",""},
+                new Object[]{"browser","safari", "latest", "macOS 10.15",""},
+                new Object[]{"browser","safari", "latest-1", "macOS 10.15",""},
                 // new Object[]{"browser","safari", "latest", "macOS 10.13",""},
                 new Object[]{"browser","safari", "11.0", "macOS 10.12",""},
                 new Object[]{"browser","chrome", "76.0", "OS X 10.11",""},

@@ -53,21 +53,21 @@ public class SampleSauceTest {
      *
      * @param testMethod
      * @return
-     * @throws JSONException 
+     * @throws JSONException
      */
     @DataProvider(name = "hardCodedBrowsers", parallel = true)
     public static Object[][] sauceBrowserDataProvider(Method testMethod) {
         return new Object[][]{
 
-//                // Windows
-                new Object[]{"browser","chrome", "latest", "Windows 10",""},
+                // Windows
+                // new Object[]{"browser","chrome", "latest", "Windows 10",""},
                 new Object[]{"browser","chrome", "latest", "Windows 10",""},
                 new Object[]{"browser","MicrosoftEdge", "latest", "Windows 10",""},
-                new Object[]{"browser","MicrosoftEdge", "latest-1", "Windows 10",""},
+                // new Object[]{"browser","MicrosoftEdge", "latest-1", "Windows 10",""},
                 new Object[]{"browser","firefox", "latest-2", "Windows 10",""},
                 new Object[]{"browser","internet explorer", "11", "Windows 8.1",""},
                 new Object[]{"browser","firefox", "55.0", "Windows 7",""},
-        
+
                 // Mac
                 new Object[]{"browser","firefox", "latest", "macOS 10.14",""},
                 new Object[]{"browser","firefox", "latest", "macOS 10.15",""},
@@ -76,8 +76,8 @@ public class SampleSauceTest {
                 // new Object[]{"browser","safari", "latest", "macOS 10.13",""},
                 new Object[]{"browser","safari", "11.0", "macOS 10.12",""},
                 new Object[]{"browser","chrome", "76.0", "OS X 10.11",""},
-                // new Object[]{"device","", "", "Android","Samsung.*"},
-                
+                new Object[]{"device","", "", "Android","Samsung.*"},
+
         };
     }
 
@@ -94,15 +94,15 @@ public class SampleSauceTest {
      */
     private WebDriver createDriver(String environment, String browser, String version, String os, String device, String methodName) throws MalformedURLException {
 
-    	
-    	
+
+
         DesiredCapabilities capabilities = new DesiredCapabilities();
-        
+
         capabilities.setCapability("username", sauce_username);
         capabilities.setCapability("accesskey", sauce_accesskey);
         String jobName = methodName;
         capabilities.setCapability("name", jobName);
-        
+
         if (environment == "browser") {
         	capabilities.setCapability("browserName", browser);
         	capabilities.setCapability("version", version);
@@ -118,7 +118,7 @@ public class SampleSauceTest {
         //Local Driver
 
         // WebDriver driver = new FireFoxDriver();
-        
+
         //Creates Selenium Driver
         webDriver.set(new RemoteWebDriver(
                 new URL("https://ondemand.us-west-1.saucelabs.com:443/wd/hub"),
@@ -133,11 +133,11 @@ public class SampleSauceTest {
         // webDriver.set(new RemoteWebDriver(
         //         new URL("https://ondemand.eu-central-1.saucelabs.com/wd/hub"),
         //         capabilities));
-        
+
       //Keeps track of the unique Selenium session ID used to identify jobs on Sauce Labs
         String id = ((RemoteWebDriver) getWebDriver()).getSessionId().toString();
         sessionId.set(id);
-        
+
         //For CI plugins
         String message = String.format("SauceOnDemandSessionID=%1$s job-name=%2$s", id, jobName);
         System.out.println(message);
@@ -148,7 +148,7 @@ public class SampleSauceTest {
     @AfterMethod
     public void tearDown(ITestResult result) throws Exception {
     	boolean status = result.isSuccess();
-    	((JavascriptExecutor)webDriver.get()).executeScript("sauce:job-result="+ status); 
+    	((JavascriptExecutor)webDriver.get()).executeScript("sauce:job-result="+ status);
         webDriver.get().quit();
     }
 
@@ -221,12 +221,12 @@ public class SampleSauceTest {
 
     public void login(WebDriver driver, String username, String password) {
         WebDriverWait wait = new WebDriverWait(driver, 15);
-        //((JavascriptExecutor)driver).executeScript("sauce:context=Navigate to the Sauce Labs Login Page"); 
+        //((JavascriptExecutor)driver).executeScript("sauce:context=Navigate to the Sauce Labs Login Page");
         driver.get("https://www.saucedemo.com");
-        //((JavascriptExecutor)driver).executeScript("sauce:context=Enter Username");        
+        //((JavascriptExecutor)driver).executeScript("sauce:context=Enter Username");
         WebElement usernameInput = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("user-name")));
         usernameInput.sendKeys(username);
-       // ((JavascriptExecutor)driver).executeScript("sauce:context=Enter Incorrect Password");     
+       // ((JavascriptExecutor)driver).executeScript("sauce:context=Enter Incorrect Password");
         driver.findElement(By.id("password")).sendKeys(password);
        // ((JavascriptExecutor)driver).executeScript("sauce:context=Click Submit Button");
         driver.findElement(By.cssSelector("#login_button_container > div > form > input.btn_action")).click();
@@ -235,8 +235,8 @@ public class SampleSauceTest {
 
     public void isErrorPresent(WebDriver driver) {
         WebDriverWait wait = new WebDriverWait(driver, 15);
-        //((JavascriptExecutor)driver).executeScript("sauce:context=Assert Error Message is Present");         
-        String errorSelector = "#login_button_container > div > form > h3";        
+        //((JavascriptExecutor)driver).executeScript("sauce:context=Assert Error Message is Present");
+        String errorSelector = "#login_button_container > div > form > h3";
         WebElement errorMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(errorSelector)));
         assert(errorMessage.isDisplayed());
     }

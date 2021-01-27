@@ -57,27 +57,25 @@ public class SampleSauceTest {
      */
     @DataProvider(name = "hardCodedBrowsers", parallel = true)
     public static Object[][] sauceBrowserDataProvider(Method testMethod) {
-        return new Object[][]{
-
-                // Windows
-                // new Object[]{"browser","chrome", "latest", "Windows 10",""},
-                new Object[]{"browser","chrome", "latest", "Windows 10",""},
-                new Object[]{"browser","MicrosoftEdge", "latest", "Windows 10",""},
-                // new Object[]{"browser","MicrosoftEdge", "latest-1", "Windows 10",""},
-                new Object[]{"browser","firefox", "latest-2", "Windows 10",""},
-                new Object[]{"browser","internet explorer", "11", "Windows 8.1",""},
-                new Object[]{"browser","firefox", "55.0", "Windows 7",""},
-
-                // Mac
-                new Object[]{"browser","firefox", "latest", "macOS 10.14",""},
-                new Object[]{"browser","firefox", "latest", "macOS 10.15",""},
-                new Object[]{"browser","safari", "latest", "macOS 10.15",""},
-                new Object[]{"browser","safari", "latest-1", "macOS 10.15",""},
-                // new Object[]{"browser","safari", "latest", "macOS 10.13",""},
-                new Object[]{"browser","safari", "11.0", "macOS 10.12",""},
-                new Object[]{"browser","chrome", "76.0", "OS X 10.11",""},
-                new Object[]{"device","", "", "Android","Samsung.*"},
-
+        return new Object[][] {
+          new Object[]{"browser", "chrome", "latest", "Windows 10",""},
+          new Object[]{"browser", "chrome", "latest", "Windows 10",""},
+          new Object[]{"browser", "firefox", "latest-2", "Windows 10",""},
+          new Object[]{"browser", "MicrosoftEdge", "latest", "Windows 10",""},
+          new Object[]{"browser", "MicrosoftEdge", "latest-1", "Windows 10",""},
+          new Object[]{"browser", "internet explorer", "11", "Windows 8.1",""},
+          new Object[]{"browser", "firefox", "55.0", "Windows 7",""},
+          new Object[]{"browser", "firefox", "latest", "macOS 10.14",""},
+          new Object[]{"browser", "firefox", "latest", "macOS 10.14",""},
+          new Object[]{"browser", "safari", "latest", "macOS 10.14",""},
+          new Object[]{"browser", "safari", "latest", "macOS 10.14",""},
+          new Object[]{"browser", "safari", "latest", "macOS 10.13",""},
+          new Object[]{"browser", "safari", "11.0", "macOS 10.12",""},
+          new Object[]{"browser", "chrome", "76.0", "OS X 10.11",""},
+          new Object[]{"device", "", "", "Android", "Samsung.*"},
+          new Object[]{"device", "", "", "Android", "Google.*"},
+          new Object[]{"device", "Safari", "", "iOS", "iPhone.*"},
+          new Object[]{"device", "Safari", "", "iOS", "iPad.*"}
         };
     }
 
@@ -92,31 +90,40 @@ public class SampleSauceTest {
      * @return
      * @throws MalformedURLException if an error occurs parsing the url
      */
-    private WebDriver createDriver(String environment, String browser, String version, String os, String device, String methodName) throws MalformedURLException {
-
-
+    private WebDriver createDriver(
+      String environment,
+      String browser,
+      String version,
+      String os,
+      String device,
+      String methodName
+      ) throws MalformedURLException {
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
 
         capabilities.setCapability("username", sauce_username);
         capabilities.setCapability("accesskey", sauce_accesskey);
+
         String jobName = methodName;
         capabilities.setCapability("name", jobName);
 
         if (environment == "browser") {
-        	capabilities.setCapability("browserName", browser);
+          capabilities.setCapability("browserName", browser);
         	capabilities.setCapability("version", version);
         	capabilities.setCapability("platform", os);
         	capabilities.setCapability("extendedDebugging", true);
         	capabilities.setCapability("capturePerformance", true);
-    	} else {
-    		capabilities.setCapability("platformName", os);
-    		capabilities.setCapability("deviceName", device);
-    	}
-
+          capabilities.setCapability("idleTimeout", "90");
+          capabilities.setCapability("newCommandTimeout", "90");
+        }
+        else if (environment == "device" ) {
+          capabilities.setCapability("platformName", os);
+          capabilities.setCapability("deviceName", device);
+          capabilities.setCapability("idleTimeout", "90");
+          capabilities.setCapability("newCommandTimeout", "90");
+        }
 
         //Local Driver
-
         // WebDriver driver = new FireFoxDriver();
 
         //Creates Selenium Driver

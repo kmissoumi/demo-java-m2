@@ -69,7 +69,6 @@ public class SampleSauceTest {
           new Object[]{"browser", "firefox", "latest", "macOS 10.14",""},
           new Object[]{"browser", "safari", "latest", "macOS 10.14",""},
           new Object[]{"browser", "safari", "latest", "macOS 10.14",""},
-          new Object[]{"browser", "safari", "latest", "macOS 10.13",""},
           new Object[]{"browser", "safari", "11.0", "macOS 10.12",""},
           new Object[]{"browser", "chrome", "76.0", "OS X 10.11",""},
           new Object[]{"device", "", "", "Android", "Samsung.*"},
@@ -121,6 +120,14 @@ public class SampleSauceTest {
           capabilities.setCapability("deviceName", device);
           capabilities.setCapability("idleTimeout", "90");
           capabilities.setCapability("newCommandTimeout", "90");
+        }
+        else if (environment == "emusim" ) {
+          capabilities.setCapability("deviceOrientation", "portrait");
+          capabilities.setCapability("browserName", browser);
+          capabilities.setCapability("platformName", os);
+          capabilities.setCapability("deviceName", device);
+          capabilities.setCapability("extendedDebugging", true);
+          capabilities.setCapability("capturePerformance", true);
         }
 
         //Local Driver

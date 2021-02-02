@@ -5,6 +5,8 @@ import com.saucelabs.common.SauceOnDemandSessionIdProvider;
 import com.saucelabs.testng.SauceOnDemandAuthenticationProvider;
 import com.saucelabs.testng.SauceOnDemandTestListener;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -58,23 +60,24 @@ public class SampleSauceTest {
     @DataProvider(name = "hardCodedBrowsers", parallel = true)
     public static Object[][] sauceBrowserDataProvider(Method testMethod) {
         return new Object[][] {
-          new Object[]{"browser", "chrome", "latest", "Windows 10",""},
-          new Object[]{"browser", "chrome", "latest", "Windows 10",""},
-          new Object[]{"browser", "firefox", "latest-2", "Windows 10",""},
-          new Object[]{"browser", "MicrosoftEdge", "latest", "Windows 10",""},
-          new Object[]{"browser", "MicrosoftEdge", "latest-1", "Windows 10",""},
-          new Object[]{"browser", "internet explorer", "11", "Windows 8.1",""},
-          new Object[]{"browser", "firefox", "55.0", "Windows 7",""},
-          new Object[]{"browser", "firefox", "latest", "macOS 10.14",""},
-          new Object[]{"browser", "firefox", "latest", "macOS 10.14",""},
-          new Object[]{"browser", "safari", "latest", "macOS 10.14",""},
-          new Object[]{"browser", "safari", "latest", "macOS 10.14",""},
-          new Object[]{"browser", "safari", "11.0", "macOS 10.12",""},
-          new Object[]{"browser", "chrome", "76.0", "OS X 10.11",""},
-          new Object[]{"device", "", "", "Android", "Samsung.*"},
-          new Object[]{"device", "", "", "Android", "Google.*"},
-          new Object[]{"device", "Safari", "", "iOS", "iPhone.*"},
-          new Object[]{"device", "Safari", "", "iOS", "iPad.*"}
+          new Object[]{"browser", "chrome","latest-1",        "Windows 10",""},
+          new Object[]{"browser", "firefox","latest",         "Windows 10",""},
+          new Object[]{"browser", "chrome","latest-1",        "macOS 11.00",""},
+          new Object[]{"browser", "safari","latest",          "macOS 10.15",""},
+          new Object[]{"browser", "firefox","55.0",           "Windows 7",""},
+          new Object[]{"browser", "MicrosoftEdge","latest",   "Windows 10",""},
+          new Object[]{"browser", "MicrosoftEdge","latest-1", "Windows 10",""},
+          new Object[]{"browser", "internet explorer","11",   "Windows 8.1",""},
+          new Object[]{"browser", "chrome","76.0",            "OS X 10.11",""},
+          new Object[]{"browser", "safari","11.0",            "macOS 10.12",""},
+          new Object[]{"browser", "chrome","latest",          "Windows 10",""},
+          new Object[]{"browser", "safari","latest",          "macOS 10.14",""},
+          new Object[]{"browser", "safari","latest",          "macOS 11.00",""},
+          new Object[]{"browser", "safari","latest",          "macOS 10.15",""},
+          new Object[]{"device",  "","","Android","Samsung.*"},
+          new Object[]{"device",  "","","Android","Google.*"},
+          new Object[]{"device",  "Safari","","iOS","iPhone.*"},
+          new Object[]{"device",  "Safari","","iOS","iPad.*"}
         };
     }
 
@@ -130,6 +133,16 @@ public class SampleSauceTest {
           capabilities.setCapability("capturePerformance", true);
         }
 
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+          String jsonString = mapper.writeValueAsString(capabilities);
+          System.out.println(jsonString);
+          }
+          catch (Exception e) {
+            e.printStackTrace();
+          }
+
+
         //Local Driver
         // WebDriver driver = new FireFoxDriver();
 
@@ -147,6 +160,7 @@ public class SampleSauceTest {
         // webDriver.set(new RemoteWebDriver(
         //         new URL("https://ondemand.eu-central-1.saucelabs.com/wd/hub"),
         //         capabilities));
+
 
       //Keeps track of the unique Selenium session ID used to identify jobs on Sauce Labs
         String id = ((RemoteWebDriver) getWebDriver()).getSessionId().toString();

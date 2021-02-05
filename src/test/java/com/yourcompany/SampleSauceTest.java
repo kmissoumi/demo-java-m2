@@ -105,6 +105,7 @@ public class SampleSauceTest {
 
         capabilities.setCapability("username", sauce_username);
         capabilities.setCapability("accesskey", sauce_accesskey);
+        capabilities.setCapability("build", System.getenv("BUILD_TAG"));
 
         String jobName = methodName;
         capabilities.setCapability("name", jobName);
@@ -136,7 +137,7 @@ public class SampleSauceTest {
         ObjectMapper mapper = new ObjectMapper();
         try {
           String jsonString = mapper.writeValueAsString(capabilities);
-          System.out.println(jsonString);
+          //System.out.println(jsonString);
           }
           catch (Exception e) {
             e.printStackTrace();

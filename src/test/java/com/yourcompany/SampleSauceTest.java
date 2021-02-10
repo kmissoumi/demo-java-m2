@@ -60,6 +60,8 @@ public class SampleSauceTest {
     @DataProvider(name = "hardCodedBrowsers", parallel = true)
     public static Object[][] sauceBrowserDataProvider(Method testMethod) {
         return new Object[][] {
+          new Object[]{"device",  "","","Android","Google.*"},
+          new Object[]{"device",  "Safari","","iOS","iPhone.*"},
           new Object[]{"browser", "chrome","latest-1",        "Windows 10",""},
           new Object[]{"browser", "firefox","latest",         "Windows 10",""},
           new Object[]{"browser", "chrome","latest-1",        "macOS 11.00",""},
@@ -74,10 +76,8 @@ public class SampleSauceTest {
           new Object[]{"browser", "safari","latest",          "macOS 10.14",""},
           new Object[]{"browser", "safari","latest",          "macOS 11.00",""},
           new Object[]{"browser", "safari","latest",          "macOS 10.15",""},
-          new Object[]{"device",  "","","Android","Samsung.*"},
-          new Object[]{"device",  "","","Android","Google.*"},
-          new Object[]{"device",  "Safari","","iOS","iPhone.*"},
-          new Object[]{"device",  "Safari","","iOS","iPad.*"}
+          new Object[]{"device",  "","","Android","Samsung.*"}
+
         };
     }
 
@@ -106,6 +106,8 @@ public class SampleSauceTest {
         capabilities.setCapability("username", sauce_username);
         capabilities.setCapability("accesskey", sauce_accesskey);
         capabilities.setCapability("build", System.getenv("BUILD_TAG"));
+        //capabilities.setCapability("tags", ['project_x', 'cc_000101010']);
+        //capabilities.setCapability("public", "team");
 
         String jobName = methodName;
         capabilities.setCapability("name", jobName);
@@ -118,6 +120,8 @@ public class SampleSauceTest {
         	capabilities.setCapability("capturePerformance", true);
           capabilities.setCapability("idleTimeout", "90");
           capabilities.setCapability("newCommandTimeout", "90");
+          //capabilities.setCapability("_sauceCloudNode: "prod-isoba11");
+
         }
         else if (environment == "device" ) {
           capabilities.setCapability("platformName", os);

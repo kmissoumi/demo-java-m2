@@ -62,19 +62,7 @@ public class SampleSauceTest {
           new Object[]{"browser", "chrome", "latest", "Windows 10",""},
           new Object[]{"browser", "firefox", "latest-2", "Windows 10",""},
           new Object[]{"browser", "MicrosoftEdge", "latest", "Windows 10",""},
-          new Object[]{"browser", "MicrosoftEdge", "latest-1", "Windows 10",""},
-          new Object[]{"browser", "internet explorer", "11", "Windows 8.1",""},
-          new Object[]{"browser", "firefox", "55.0", "Windows 7",""},
-          new Object[]{"browser", "firefox", "latest", "macOS 10.14",""},
-          new Object[]{"browser", "firefox", "latest", "macOS 10.14",""},
-          new Object[]{"browser", "safari", "latest", "macOS 10.14",""},
-          new Object[]{"browser", "safari", "latest", "macOS 10.14",""},
-          new Object[]{"browser", "safari", "11.0", "macOS 10.12",""},
-          new Object[]{"browser", "chrome", "76.0", "OS X 10.11",""},
-          new Object[]{"device", "", "", "Android", "Samsung.*"},
-          new Object[]{"device", "", "", "Android", "Google.*"},
-          new Object[]{"device", "Safari", "", "iOS", "iPhone.*"},
-          new Object[]{"device", "Safari", "", "iOS", "iPad.*"}
+          new Object[]{"browser", "MicrosoftEdge", "latest-1", "Windows 10",""}
         };
     }
 

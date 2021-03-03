@@ -254,21 +254,21 @@ public class SampleSauceTest {
 
     public void login(WebDriver driver, String username, String password) {
         WebDriverWait wait = new WebDriverWait(driver, 15);
-        //((JavascriptExecutor)driver).executeScript("sauce:context=Navigate to the Sauce Labs Login Page");
+        ((JavascriptExecutor)driver).executeScript("sauce:context=// Navigate to the Sauce Labs Login Page");
         driver.get("https://www.saucedemo.com");
-        //((JavascriptExecutor)driver).executeScript("sauce:context=Enter Username");
+        ((JavascriptExecutor)driver).executeScript("sauce:context=// Enter Username");
         WebElement usernameInput = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("user-name")));
         usernameInput.sendKeys(username);
-       // ((JavascriptExecutor)driver).executeScript("sauce:context=Enter Incorrect Password");
+        ((JavascriptExecutor)driver).executeScript("sauce:context=// Enter Password");
         driver.findElement(By.id("password")).sendKeys(password);
-       // ((JavascriptExecutor)driver).executeScript("sauce:context=Click Submit Button");
+        ((JavascriptExecutor)driver).executeScript("sauce:context=// Click Submit Button");
         driver.findElement(By.cssSelector("#login_button_container > div > form > input.btn_action")).click();
 
     }
 
     public void isErrorPresent(WebDriver driver) {
         WebDriverWait wait = new WebDriverWait(driver, 15);
-        //((JavascriptExecutor)driver).executeScript("sauce:context=Assert Error Message is Present");
+        ((JavascriptExecutor)driver).executeScript("sauce:context=// Check if Error is Present");
         String errorSelector = "#login_button_container > div > form > h3";
         WebElement errorMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(errorSelector)));
         assert(errorMessage.isDisplayed());

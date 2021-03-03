@@ -225,7 +225,17 @@ public class SampleSauceTest {
 
         WebDriver driver = createDriver(type, browser, version, os, device, method.getName());
         login(driver, "problem_user", "secret_sauce");
-        assert(driver.findElement(By.id("inventory_container")).isDisplayed());
+        try {
+          // findElement will raise an exception when element is not found.
+          // If element is found, set our assertion to false.
+          driver.findElement(By.id("inventory_container")).isDisplayed();
+          ((JavascriptExecutor)driver).executeScript("sauce:context=// Missing Element Expected. Test is NOTOK. 🙀⛔️💀❌");
+          assert(false);
+        }
+        catch(Exception e) {
+          ((JavascriptExecutor)driver).executeScript("sauce:context=// Missing Element Expected. Test is OK! 🎉🏆⭐️✅");
+          assert(true);
+        }
     }
 
     @Test(dataProvider = "hardCodedBrowsers")

@@ -37,6 +37,9 @@ public class SampleSauceTest {
 
     public String sauce_username = System.getenv("SAUCE_USERNAME");
     public String sauce_accesskey = System.getenv("SAUCE_ACCESS_KEY");
+    public String build = System.getenv("BUILD_TAG");
+
+  /**  private static String buildName = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 
     /**
      * ThreadLocal variable which contains the  {@link WebDriver} instance which is used to perform browser interactions with.
@@ -59,22 +62,9 @@ public class SampleSauceTest {
     public static Object[][] sauceBrowserDataProvider(Method testMethod) {
         return new Object[][] {
           new Object[]{"browser", "chrome", "latest", "Windows 10",""},
-          new Object[]{"browser", "chrome", "latest", "Windows 10",""},
-          new Object[]{"browser", "firefox", "latest-2", "Windows 10",""},
-          new Object[]{"browser", "MicrosoftEdge", "latest", "Windows 10",""},
-          new Object[]{"browser", "MicrosoftEdge", "latest-1", "Windows 10",""},
-          new Object[]{"browser", "internet explorer", "11", "Windows 8.1",""},
-          new Object[]{"browser", "firefox", "55.0", "Windows 7",""},
-          new Object[]{"browser", "firefox", "latest", "macOS 10.14",""},
-          new Object[]{"browser", "firefox", "latest", "macOS 10.14",""},
-          new Object[]{"browser", "safari", "latest", "macOS 10.14",""},
-          new Object[]{"browser", "safari", "latest", "macOS 10.14",""},
-          new Object[]{"browser", "safari", "11.0", "macOS 10.12",""},
-          new Object[]{"browser", "chrome", "76.0", "OS X 10.11",""},
-          new Object[]{"device", "", "", "Android", "Samsung.*"},
-          new Object[]{"device", "", "", "Android", "Google.*"},
-          new Object[]{"device", "Safari", "", "iOS", "iPhone.*"},
-          new Object[]{"device", "Safari", "", "iOS", "iPad.*"}
+          new Object[]{"browser", "chrome", "latest-1", "Windows 10",""},
+          new Object[]{"browser", "chrome", "latest", "OS X 11.00",""},
+          new Object[]{"browser", "chrome", "latest-1", "OS X 11.00",""}
         };
     }
 
@@ -105,13 +95,17 @@ public class SampleSauceTest {
 
         String jobName = methodName;
         capabilities.setCapability("name", jobName);
+        capabilities.setCapability("build", build);
+
+
+
+      //*   ((JavascriptExecutor)driver).executeScript("sauce:job-build=");
+
 
         if (environment == "browser") {
           capabilities.setCapability("browserName", browser);
         	capabilities.setCapability("version", version);
         	capabilities.setCapability("platform", os);
-        	capabilities.setCapability("extendedDebugging", true);
-        	capabilities.setCapability("capturePerformance", true);
           capabilities.setCapability("idleTimeout", "90");
           capabilities.setCapability("newCommandTimeout", "90");
         }
@@ -126,8 +120,6 @@ public class SampleSauceTest {
           capabilities.setCapability("browserName", browser);
           capabilities.setCapability("platformName", os);
           capabilities.setCapability("deviceName", device);
-          capabilities.setCapability("extendedDebugging", true);
-          capabilities.setCapability("capturePerformance", true);
         }
 
         //Local Driver
@@ -177,13 +169,7 @@ public class SampleSauceTest {
      */
 
 
-    @Test(dataProvider = "hardCodedBrowsers")
-    public void invalidLoginFlow(String type, String browser, String version, String os, String device, Method method) throws Exception {
 
-        WebDriver driver = createDriver(type, browser, version, os, device, method.getName());
-        login(driver, "MySauceUsername", "incorrectPassword");
-        isErrorPresent(driver);
-    }
 
     @Test(dataProvider = "hardCodedBrowsers")
     public void demoPageTitle(String type, String browser, String version, String os, String device, Method method) throws Exception {
@@ -197,25 +183,12 @@ public class SampleSauceTest {
     public void validLoginFlow(String type, String browser, String version, String os, String device, Method method) throws Exception {
 
         WebDriver driver = createDriver(type, browser, version, os, device, method.getName());
-        login(driver, "standard_user", "secret_sauce");
+        login(driver, "performance_glitch_user", "secret_sauce");
         assert(driver.findElement(By.id("inventory_container")).isDisplayed());
     }
 
-    @Test(dataProvider = "hardCodedBrowsers")
-    public void problemLoginFlow(String type, String browser, String version, String os, String device, Method method) throws Exception {
 
-        WebDriver driver = createDriver(type, browser, version, os, device, method.getName());
-        login(driver, "problem_user", "secret_sauce");
-        assert(driver.findElement(By.id("inventory_container")).isDisplayed());
-    }
 
-    @Test(dataProvider = "hardCodedBrowsers")
-    public void lockedOutLoginFlow(String type, String browser, String version, String os, String device, Method method) throws Exception {
-
-        WebDriver driver = createDriver(type, browser, version, os, device, method.getName());
-        login(driver, "locked_out_user", "secret_sauce");
-        isErrorPresent(driver);
-    }
 
     /**
      * @return the {@link WebDriver} for the current thread

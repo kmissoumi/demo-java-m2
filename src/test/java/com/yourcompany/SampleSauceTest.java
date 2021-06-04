@@ -108,6 +108,8 @@ public class SampleSauceTest {
         	capabilities.setCapability("platform", os);
           capabilities.setCapability("idleTimeout", "90");
           capabilities.setCapability("newCommandTimeout", "90");
+          capabilities.setCapability("extendedDebugging", true);
+          capabilities.setCapability("capturePerformance", true);
         }
         else if (environment == "device" ) {
           capabilities.setCapability("platformName", os);

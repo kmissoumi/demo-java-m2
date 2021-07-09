@@ -59,7 +59,7 @@ public class SampleSauceTest {
     public static Object[][] sauceBrowserDataProvider(Method testMethod) {
         return new Object[][] {
         //  new Object[]{"browser", "chrome", "89", "Linux",""};
-          new Object[]{"emusim", "", "8.1", "Android", "Samsung Galaxy Tab S3 GoogleAPI Emulator", ""}
+          new Object[]{"emusim", "Chrome", "8.1", "Android", "Android GoogleAPI Emulator"", ""};
         };
     }
 
@@ -112,7 +112,6 @@ public class SampleSauceTest {
           capabilities.setCapability("platformName", os);
           capabilities.setCapability("platformVersion", version);
           capabilities.setCapability("deviceName", device);
-          capabilities.setCapability("appiumVersion", "1.9.1");
 
         }
 
